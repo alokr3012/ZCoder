@@ -163,8 +163,8 @@ http://localhost:5173
 
 ## 👨‍💻 Author
 
-**Biraj Sarkar**  
-B.Tech CSE, IIT Guwahati
+**Alok Raj**  
+B.Tech Mechanical, IIT Guwahati
 
 ---
 
