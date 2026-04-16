@@ -19,10 +19,15 @@ process.on('unhandledRejection', (reason) => {
   console.error('Unhandled Rejection:', reason);
 });
 
+const normalizeOrigin = (url) => {
+  if (!url) return url;
+  return url.toString().replace(/\/$/, "");
+};
+
 const allowedOrigins = [
-  "http://localhost:5173",
-  process.env.CLIENT_URL
-];
+  normalizeOrigin("http://localhost:5173"),
+  normalizeOrigin(process.env.CLIENT_URL)
+].filter(Boolean);
 
 console.log("Allowed origins:", allowedOrigins);
 
@@ -31,7 +36,8 @@ app.use(cors({
     // allow requests with no origin (Postman, curl, server-to-server)
     if (!origin) return callback(null, true);
 
-    if (allowedOrigins.includes(origin)) {
+    const normalizedOrigin = normalizeOrigin(origin);
+    if (allowedOrigins.includes(normalizedOrigin)) {
       callback(null, true);
     } else {
       callback(new Error("Not allowed by CORS"));
@@ -82,7 +88,8 @@ const io = new Server(httpServer, {
       // Allow server-to-server & tools like Postman
       if (!origin) return callback(null, true);
 
-      if (allowedOrigins.includes(origin)) {
+      const normalizedOrigin = normalizeOrigin(origin);
+      if (allowedOrigins.includes(normalizedOrigin)) {
         return callback(null, true);
       }
 
