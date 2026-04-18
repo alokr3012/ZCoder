@@ -8,9 +8,13 @@ import codingRoutes from './routes/coding.js';
 import session from "express-session";
 import { createServer } from "http";
 import { Server } from "socket.io";
+import rateLimit from "express-rate-limit";
 
 dotenv.config();
 const app = express();
+
+app.use('/api/auth', rateLimit({ windowMs: 15*60*1000, max: 100 }));
+app.use('/api/run', rateLimit({ windowMs: 60*1000, max: 30 }));
 
 process.on('uncaughtException', (err) => {
   console.error('Uncaught Exception:', err);
@@ -49,11 +53,11 @@ app.use(cors({
 app.use(express.json());
 
 app.use(session({
-  secret: process.env.SESSION_SECRET || 'your-secret-key',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: false,
+    secure: process.env.NODE_ENV === 'production',
     httpOnly: true,
     maxAge: 24 * 60 * 60 * 1000
   }
