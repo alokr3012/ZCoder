@@ -87,7 +87,8 @@ MONGO_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/ZCoder_DB
 ### 1️⃣ Clone the repository
 
 ```bash
-git clone https://github.com/Biraj-Sarkar/ZCoder.git
+git clone https://github.com/alokr3012/ZCoder.git
+
 cd zcoder
 ```
 

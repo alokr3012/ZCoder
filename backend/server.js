@@ -28,6 +28,7 @@ const normalizeOrigin = (url) => {
   return url.toString().replace(/\/$/, "");
 };
 
+
 const allowedOrigins = [
   normalizeOrigin("http://localhost:5173"),
   normalizeOrigin(process.env.CLIENT_URL)
